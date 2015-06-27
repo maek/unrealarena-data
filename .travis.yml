@@ -3,13 +3,7 @@ language: cpp
 compiler: gcc
 
 notifications:
-  irc:
-    channels:
-      - "irc.quakenet.org#unrealarena"
-    template:
-      - "%{repository_slug} (%{branch}) \"%{commit_message}\" [%{result}]"
-      - "%{build_url}"
-      - "%{compare_url}"
+  email: false
 
 env:
   global:
@@ -29,23 +23,12 @@ script:
   - git ls-files | zip -9 "$DATAPAK" -@
   - zip -d "$DATAPAK" .gitattributes .travis.yml README.md
 
-# after_success:
-
-# after_failure:
-
-# after_script:
-
-# before_deploy:
-
 deploy:
   provider: releases
   api_key:
-    secure: G98qIFo3CZ2VYz3f1+Bx2YtikyP4pr/883uExko3b+M/qT3JSoZ1sGMjEi+JEIFdB3rU44vzRQuYTzk173pYchYhvDBaLC6yz++EyXTgZqTuvbUEHLGP1Ve2MXaFCsFNb6LVOvDbwL1b6Oi/2qEoiyIdLPYj46EVu4wdP0GC+IKzsAkdxP/kD7rnngnKZ8AowGf4viy3/TAhKs7JshoCfcssbMTRBLvWzy8zpsw0XBWaXXUcG2EXRKATCfLAhNlfdnxN+R01kty0kdqTdPYRP3z/P5dQqKIQQULalLxNdmxdeC0o9ltmDWqCqIaCtT+N+H4VYkwPyM7J/gtMgNx4S5h0/5G+tf0UhJ1+2IbHDiLeYPsU1IEVVs6z1+HwHQGj/e+5cShi4AHIdSgWt8Z9PjJE60dXXXvX512OTW2KjTR64CNZsp65EvUWcM2CevNB0mZnpUd5cNOKqOtDPck9h8fKWo/bcbjC/CwgrUUlHN3XororRhnKYnH6UdOtM7C/K/f3Z7zVbysiMUkbsH0dib99+iOQhemYjM0uc5Cws2Ad/7MCd0BB2Wb2dMw6QWDRp1IEn2z80WmmIFwybJBvmY6hWPdl1f6lTBwNfv6pR3uXxJELMW8qLpAbdZBLpO+7okDqrN311hYSDXlXWt7j1cPaGjh46qS1S3yXGZzYsfk=
+    secure: Jb2q3QzXZ+IgorysPZPBIl8XVwxF/3JTpC8f8udt78SZw9wil9NtOpbWLWtCEQ2X3LkKL+UADnAqjapl3MlYkbPfLo6eEjGVevKK9rVtHNLJMhvtNR81CINVLe9auxdjnaM3rH493FG4c/XntHYkeFqQS5oZHGp/CTD8VguC0/T1wMGLNWwN8C6kn6P3HCgn8II2aMhCs3UgYtgauqvXmP4SQjDTr4jPtRrhXHI4XLDCaLdGwmOI0hlJDUpXWYXYVoWQNPZBPgOgc0KhLDaJolZMiwrb3P4yBywCvchM31gGK5kh3E3shJuKEQwxHk2010Rg095tr9nweR7Emga7y30iBGRp3E6cnf2S5+O1txqHPhKmUnv48WaIzvWZzG7qilHTCcjli1F8QljENDCuLWrew7X5O/VK0kkHAIsv8fJ/YP9yDU0AoO/h1gqKk89QPzUPBDZTZnKXJ+pT2pC6Uh9GNQfYakWoGtcbTt7jGmmmRHtQY/4fu1RZZz09A7/UZKa6s3TOWQ2f8/hnIG40xo93oprR1VQgxF3nWC93VDOpti+MZaxSgxO3AMEWjheZTCfckfR2irRIFsKyqUvkWFvrMwtozutbQCAmWqfZfIqeH6UXtnlS/Nhg/HfKjJTpzXaYwU3bkNXoWnbwKIffo5sFv8a+n2gz7tWxgZbyqQE=
   file: "$DATAPAK"
   skip_cleanup: true
   on:
-    branch: master
     tags: true
-    repo: unrealarena/unrealarena-data
-
-# after_deploy:
+    repo: maek/unrealarena-data
