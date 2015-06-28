@@ -2,33 +2,27 @@ language: cpp
 
 compiler: gcc
 
+sudo: required
+
 notifications:
   email: false
 
-env:
-  global:
-    - HOMEPATH="$HOME/.unrealarena/pkg"
-    - DATAPAK="$HOMEPATH/unrealarena_$(cat VERSION).pre.zip"
-
 before_install:
-  - travis_retry sudo apt-get -qq update
+  - ./.travis.sh "before_install"
 
 install:
-  - travis_retry sudo apt-get -qq install zip
-
-before_script:
-  - mkdir -p "$HOMEPATH"
+  - ./.travis.sh "install"
 
 script:
-  - git ls-files | zip -9 "$DATAPAK" -@
-  - zip -d "$DATAPAK" .gitattributes .travis.yml README.md
+  - ./.travis.sh "script"
 
 deploy:
   provider: releases
   api_key:
     secure: Jb2q3QzXZ+IgorysPZPBIl8XVwxF/3JTpC8f8udt78SZw9wil9NtOpbWLWtCEQ2X3LkKL+UADnAqjapl3MlYkbPfLo6eEjGVevKK9rVtHNLJMhvtNR81CINVLe9auxdjnaM3rH493FG4c/XntHYkeFqQS5oZHGp/CTD8VguC0/T1wMGLNWwN8C6kn6P3HCgn8II2aMhCs3UgYtgauqvXmP4SQjDTr4jPtRrhXHI4XLDCaLdGwmOI0hlJDUpXWYXYVoWQNPZBPgOgc0KhLDaJolZMiwrb3P4yBywCvchM31gGK5kh3E3shJuKEQwxHk2010Rg095tr9nweR7Emga7y30iBGRp3E6cnf2S5+O1txqHPhKmUnv48WaIzvWZzG7qilHTCcjli1F8QljENDCuLWrew7X5O/VK0kkHAIsv8fJ/YP9yDU0AoO/h1gqKk89QPzUPBDZTZnKXJ+pT2pC6Uh9GNQfYakWoGtcbTt7jGmmmRHtQY/4fu1RZZz09A7/UZKa6s3TOWQ2f8/hnIG40xo93oprR1VQgxF3nWC93VDOpti+MZaxSgxO3AMEWjheZTCfckfR2irRIFsKyqUvkWFvrMwtozutbQCAmWqfZfIqeH6UXtnlS/Nhg/HfKjJTpzXaYwU3bkNXoWnbwKIffo5sFv8a+n2gz7tWxgZbyqQE=
-  file: "$DATAPAK"
+  file: "unrealarena-data.pre.zip"
   skip_cleanup: true
+  prerelease: true
   on:
     tags: true
     repo: maek/unrealarena-data
