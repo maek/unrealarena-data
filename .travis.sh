@@ -24,14 +24,7 @@ install() {
 
 # script
 script() {
-	_VERSION="$(git show :VERSION)"
-	__VERSION="$(git show HEAD^:VERSION)"
-	if [ "${_VERSION}" == "${__VERSION}" ]; then
-		VERSION="${_VERSION}"
-	else
-		VERSION="${__VERSION}"
-	fi
-	git diff --name-only "v${VERSION}" | fgrep -v -e ".gitattributes" \
+	git diff --name-only v"$(git show HEAD^:VERSION)" | fgrep -v -e ".gitattributes" \
 		                                      -e ".travis.sh" \
 		                                      -e ".travis.yml" \
 		                                      -e "README.md" | zip -9 "unrealarena-data.pre.zip" -@
