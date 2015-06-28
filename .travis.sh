@@ -24,15 +24,17 @@ install() {
 
 # script
 script() {
-	if [ -n "${TRAVIS_TAG}" ]; then
-		VERSION="HEAD^:VERSION"
+	_VERSION="$(git show :VERSION)"
+	__VERSION="$(git show HEAD^:VERSION)"
+	if [ "${_VERSION}" == "${__VERSION}" ]; then
+		VERSION="${_VERSION}"
 	else
-		VERSION=":VERSION"
+		VERSION="${__VERSION}"
 	fi
-	git diff --name-only v"$(git show ${VERSION})" | fgrep -v -e ".gitattributes" \
-		                                                  -e ".travis.sh" \
-		                                                  -e ".travis.yml" \
-								  -e "README.md" | zip -9 "unrealarena-data.pre.zip" -@
+	git diff --name-only "v${VERSION}" | fgrep -v -e ".gitattributes" \
+		                                      -e ".travis.sh" \
+		                                      -e ".travis.yml" \
+		                                      -e "README.md" | zip -9 "unrealarena-data.pre.zip" -@
 }
 
 
