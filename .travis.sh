@@ -24,8 +24,15 @@ install() {
 
 # script
 script() {
-	git ls-files | zip -9 "unrealarena-data.pre.zip" -@
-	zip -d "unrealarena-data.pre.zip" .gitattributes .travis.yml README.md
+	if [ "${TRAVIS_TAG}" ]; then
+		VERSION="HEAD^:VERSION"
+	else
+		VERSION=":VERSION"
+	fi
+	git diff --name-only v"$(git show ${VERSION})" | fgrep -v -e ".gitattributes" \
+		                                                  -e ".travis.sh" \
+		                                                  -e ".travis.yml" \
+								  -e "README.md" | zip -9 "unrealarena-data.pre.zip" -@
 }
 
 
