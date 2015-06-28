@@ -24,7 +24,7 @@ install() {
 
 # script
 script() {
-	if [ "${TRAVIS_TAG}" ]; then
+	if [ -n "${TRAVIS_TAG}" ]; then
 		VERSION="HEAD^:VERSION"
 	else
 		VERSION=":VERSION"
